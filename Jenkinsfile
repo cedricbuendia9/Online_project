@@ -1,17 +1,38 @@
 pipeline {
     agent any
 
-    stages {
+    environment {
+        DOCKER_IMAGE = "cedricbuendia/diabetes-fastapi"
+    }
 
-        stage('Docker Version') {
-            steps {
-                sh 'docker version'
-            }
-        }
+    stages {
 
         stage('Build Image') {
             steps {
-                sh 'docker build -t diabetes-fastapi:latest -f Dockerfile .'
+                sh 'docker build -t $DOCKER_IMAGE:latest -f Dockerfile .'
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )
+                ]) {
+
+                    sh '''
+                    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                sh 'docker push $DOCKER_IMAGE:latest'
             }
         }
 
@@ -24,14 +45,8 @@ pipeline {
                 docker run -d \
                   --name diabetes-fastapi-app \
                   -p 8000:8000 \
-                  diabetes-fastapi:latest
+                  $DOCKER_IMAGE:latest
                 '''
-            }
-        }
-
-        stage('Verify') {
-            steps {
-                sh 'docker ps'
             }
         }
     }
