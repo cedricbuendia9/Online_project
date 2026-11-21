@@ -4,7 +4,7 @@ import joblib
 
 app = FastAPI()
 
-model = joblib.load("model.pkl")
+model = joblib.load("app/model.pkl")
 
 FEATURES = [
     "age",
