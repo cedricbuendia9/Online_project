@@ -2,7 +2,7 @@
 
 API desarrollada con FastAPI que expone un modelo
 RandomForestRegressor entrenado con el dataset Diabetes
-de scikit-learn. Esto es una prueba
+de scikit-learn. Esto es una prueba de jenkins y webhook.
 
 ## Ejecutar
 
