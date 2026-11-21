@@ -5,14 +5,25 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Codigo obtenido desde GitHub'
+                checkout scm
             }
         }
 
-        stage('Verify Files') {
+        stage('Docker Version') {
             steps {
-                sh 'pwd'
-                sh 'ls -la'
+                sh 'docker version'
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                sh 'docker build -t diabetes-fastapi:ci -f Dockerfile .'
+            }
+        }
+
+        stage('List Images') {
+            steps {
+                sh 'docker images'
             }
         }
 
