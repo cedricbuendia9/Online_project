@@ -117,32 +117,32 @@ def predict(data: PredictionRequest):
         "prediction": float(prediction[0])
     }
 #nuevo inicio
-@app.get("/metrics")
-def metrics():
-    return {
-        "predictions": prediction_count,
-        "drift_alerts": drift_count
-    }
+# @app.get("/metrics")
+# def metrics():
+#     return {
+#         "predictions": prediction_count,
+#         "drift_alerts": drift_count
+#     }
 
-@app.get("/monitor")
-def monitor():
-    drift_percentage = (
-        drift_count / prediction_count * 100
-        if prediction_count > 0 else 0
-    )
-    return {
-        "model": "Diabetes Predictor",
-        "version": "1.0",
-        "predictions": prediction_count,
-        "drift_alerts": drift_count,
-        "drift_percentage": drift_percentage,
-        "status": "healthy"
-    } #nuevo fin
+# @app.get("/monitor")
+# def monitor():
+#     drift_percentage = (
+#         drift_count / prediction_count * 100
+#         if prediction_count > 0 else 0
+#     )
+#     return {
+#         "model": "Diabetes Predictor",
+#         "version": "1.0",
+#         "predictions": prediction_count,
+#         "drift_alerts": drift_count,
+#         "drift_percentage": drift_percentage,
+#         "status": "healthy"
+#     } #nuevo fin
 
-@app.get("/prometheus")
-def prometheus_metrics():
+# @app.get("/prometheus")
+# def prometheus_metrics():
 
-    return Response(
-        generate_latest(),
-        media_type="text/plain"
-    )
+#     return Response(
+#         generate_latest(),
+#         media_type="text/plain"
+#     )

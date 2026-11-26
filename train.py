@@ -7,8 +7,6 @@ from model import create_model
 from sklearn.datasets import load_diabetes
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
-#nuevo 
-#nuevo
 import mlflow
 import mlflow.sklearn
 
@@ -53,10 +51,6 @@ def train():
             "RandomForestRegressor"
         )
 
-        # mlflow.sklearn.log_model(
-        #     model,
-        #     "model"
-        # )
         mlflow.sklearn.log_model(
             sk_model=model,
             name="model",
@@ -73,10 +67,7 @@ def train():
     # Guardar baseline para monitoreo
     baseline = np.mean(x_train, axis=0)
 
-    joblib.dump(
-        baseline,
-        "app/baseline.pkl"
-    )
+    joblib.dump(baseline, "app/baseline.pkl")
 
     print("Modelo guardado")
     print("Baseline guardado")
